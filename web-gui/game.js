@@ -8,7 +8,6 @@ applyRootStyles(rootStyles);
 const gameBoard = new GameBoard(document.querySelector('#game-board'));
 const btnStart = document.querySelector('.button-start')
 let score = document.querySelector('.score')
-let record = document.querySelector('.record')
 let lvl = document.querySelector('.lvl')
 let dataScore = 0
 let dataLvl = 0
@@ -49,17 +48,6 @@ const timerResponce = async () => {
 			dataLvl += 1
 			fetch(`${baseURL}/api/config/lvl`)
 		}
-		// if (dataScore > dataForRecord) {
-		// 	const res = await fetch(`${baseURL}/api/config/record`, {
-		// 		method: 'POST',
-		// 		headers: {
-		// 			'Content-Type': 'application/json',
-		// 		},
-		// 		body: JSON.stringify({ points: dataScore }),
-		// 	})
-		// 	const newDataForRecord = await res.json()
-		// 	record.innerHTML = newDataForRecord
-		// }
 	}, 1000)
 
 }
@@ -85,15 +73,6 @@ btnStart.addEventListener('click', async function () {
 	if (response.ok) {
 		dataScore = 0
 		dataLvl = 0
-		// const res = await fetch(`${baseURL}/api/config/record`, {
-		// 	method: 'POST',
-		// 	headers: {
-		// 		'Content-Type': 'application/json',
-		// 	},
-		// 	body: JSON.stringify({ points: 100 }),
-		// })
-		// const dataForRecord = await res.json()
-		// record.innerHTML = dataForRecord
 		timerResponce()
 		btnStart.setAttribute('disabled', '');
 	}
