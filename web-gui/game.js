@@ -1,8 +1,12 @@
 import { applyRootStyles } from './src/utils.js';
 import { GameBoard } from './src/game-board.js';
 import { rootStyles, keyCodes } from './src/config.js';
+import axios from 'axios'
 
-let baseURL = process.env.APP_API_URL
+const instance = axios.create({
+	baseURL: process.env.APP_API_URL,
+});
+
 
 applyRootStyles(rootStyles);
 const gameBoard = new GameBoard(document.querySelector('#game-board'));
