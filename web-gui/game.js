@@ -2,6 +2,8 @@ import { applyRootStyles } from './src/utils.js';
 import { GameBoard } from './src/game-board.js';
 import { rootStyles, keyCodes } from './src/config.js';
 
+let baseURL = process.env.APP_API_URL
+
 applyRootStyles(rootStyles);
 const gameBoard = new GameBoard(document.querySelector('#game-board'));
 const btnStart = document.querySelector('.button-start')
@@ -13,7 +15,7 @@ let dataLvl = 0
 
 const timerResponce = async (dataForRecord) => {
 	let timerId = setInterval(async () => {
-		const responce = await fetch('http://localhost:8080/api/state')
+		const responce = await fetch(`${baseURL}/api/state`)
 		const data = await responce.json()
 		if (!data.go) {
 			clearInterval(timerId)
@@ -45,10 +47,10 @@ const timerResponce = async (dataForRecord) => {
 		dataScore += 1
 		if (dataScore % 5 === 0 && dataScore <= 50) {
 			dataLvl += 1
-			fetch('http://localhost:8080/api/config/lvl')
+			fetch(`${baseURL}/api/config/lvl`)
 		}
 		if (dataScore > dataForRecord) {
-			const res = await fetch('http://localhost:8080/api/config/record', {
+			const res = await fetch(`${baseURL}/api/config/record`, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
@@ -65,7 +67,7 @@ const timerResponce = async (dataForRecord) => {
 
 window.onbeforeunload = async function () {
 	dataScore = 0
-	fetch('http://localhost:8080/api/state/unload', {
+	fetch(`${baseURL}/api/state/unload`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
@@ -74,7 +76,7 @@ window.onbeforeunload = async function () {
 };
 
 btnStart.addEventListener('click', async function () {
-	const response = await fetch('http://localhost:8080/api/games/1', {
+	const response = await fetch(`${baseURL}/api/games/1`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
@@ -83,7 +85,7 @@ btnStart.addEventListener('click', async function () {
 	if (response.ok) {
 		dataScore = 0
 		dataLvl = 0
-		const res = await fetch('http://localhost:8080/api/config/record', {
+		const res = await fetch(`${baseURL}/api/config/record`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
@@ -101,7 +103,7 @@ btnStart.addEventListener('click', async function () {
 
 document.addEventListener('keyup', async function (event) {
 	if (keyCodes.up.includes(event.code)) {
-		fetch('http://localhost:8080/api/actions', {
+		fetch(`${baseURL}/api/actions`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
@@ -112,7 +114,7 @@ document.addEventListener('keyup', async function (event) {
 })
 document.addEventListener('keydown', async function (event) {
 	if (keyCodes.up.includes(event.code)) {
-		fetch('http://localhost:8080/api/actions', {
+		fetch(`${baseURL}/api/actions`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
@@ -121,7 +123,7 @@ document.addEventListener('keydown', async function (event) {
 		});
 	}
 	if (keyCodes.right.includes(event.code)) {
-		fetch('http://localhost:8080/api/actions', {
+		fetch(`${baseURL}/api/actions`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
@@ -130,7 +132,7 @@ document.addEventListener('keydown', async function (event) {
 		});
 	}
 	if (keyCodes.down.includes(event.code)) {
-		fetch('http://localhost:8080/api/actions', {
+		fetch(`${baseURL}/api/actions`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
@@ -139,7 +141,7 @@ document.addEventListener('keydown', async function (event) {
 		});
 	}
 	if (keyCodes.left.includes(event.code)) {
-		await fetch('http://localhost:8080/api/actions', {
+		await fetch(`${baseURL}/api/actions`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
