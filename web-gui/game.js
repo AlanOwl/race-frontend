@@ -1,7 +1,7 @@
 import { applyRootStyles } from './src/utils.js';
 import { GameBoard } from './src/game-board.js';
 import { rootStyles, keyCodes } from './src/config.js';
-import axios from 'axios'
+import axios from '../node_modules/axios'
 
 const instance = axios.create({
 	baseURL: process.env.APP_API_URL,
