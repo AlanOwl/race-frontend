@@ -13,7 +13,7 @@ let lvl = document.querySelector('.lvl')
 let dataScore = 0
 let dataLvl = 0
 
-const timerResponce = async (dataForRecord) => {
+const timerResponce = async () => {
 	let timerId = setInterval(async () => {
 		const responce = await fetch(`${baseURL}/api/state`)
 		const data = await responce.json()
@@ -94,7 +94,7 @@ btnStart.addEventListener('click', async function () {
 		// })
 		// const dataForRecord = await res.json()
 		// record.innerHTML = dataForRecord
-		timerResponce(dataForRecord)
+		timerResponce()
 		btnStart.setAttribute('disabled', '');
 	}
 
